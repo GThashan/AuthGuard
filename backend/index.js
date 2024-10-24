@@ -7,6 +7,7 @@ import authrouter from './routes/authroute.js'
 dotenv.config();
 
 const app =express();
+app.use(express.json());
 
 app.use('/api/auth',authrouter)
 app.listen(3000,()=>{

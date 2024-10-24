@@ -38,10 +38,11 @@ export const SignUp = async (req, res) => {
 
   
   res.status(201).json({ 
+    user:{
+    ...user._doc,
+    password:null
+    },
     success: true, 
     message: "User registered successfully" },
-    user,
-    genarateTokensetcookie
-
 );
 };

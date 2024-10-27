@@ -1,7 +1,8 @@
 import { User } from '../models/user.model.js';
 import bcryptjs from 'bcryptjs';
 import { genarateTokensetcookie } from '../utils/genarateTokensetcookie.js';
-import { sendverificationEmail } from '../mailtrap/emails.js';
+import { sendWelcomeEmail, sendverificationEmail } from '../mailtrap/emails.js';
+import MessagesApi from 'mailtrap/dist/lib/api/resources/Messages.js';
 
 
 export const SignUp = async (req, res) => {
@@ -48,3 +49,33 @@ export const SignUp = async (req, res) => {
     message: "User registered successfully" },
 );
 };
+
+export const Emailverification = async(req,res)=>{
+  try {
+    const {code} = req.body;
+    const exituser = await User.findOne({
+      verificationtoken : code,
+      verificationtokenExpireAt : {$gt : Date.now()}
+    });
+    if(!exituser){
+      return res.status(200).json({success:false,message:"Invalid or exipire the token"});
+    }
+
+    exituser.isverify= true;
+    exituser.verificationtoken = undefined;
+    exituser.verificationtokenExpireAt= undefined;
+
+    await exituser.save();
+    await sendWelcomeEmail(exituser.email, exituser.name);
+    
+    return res.status(200).json({success:true,Messages:"Welcome Email send Succefully"});
+
+
+  } catch (error) {
+
+    return res.status(400).json({success:false,Messages:"Internal server error"});
+    
+  }
+
+ 
+}

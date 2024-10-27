@@ -1,9 +1,10 @@
 import express from 'express'
-import {  SignUp } from '../controllers/authController.js';
+import {  Emailverification, SignUp } from '../controllers/authController.js';
 
 const router = express.Router();
 
 router.post('/signUp', SignUp);
+router.post('/verify-email',Emailverification)
 
 
 

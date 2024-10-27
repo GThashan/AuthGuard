@@ -12,5 +12,5 @@ app.use(express.json());
 app.use('/api/auth',authrouter)
 app.listen(3000,()=>{
     ConnDB();
-    console.log("app is runing in port 3000"); 
+    console.log("app is runing in port 3000");
 })

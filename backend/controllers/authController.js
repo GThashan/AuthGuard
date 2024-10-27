@@ -1,6 +1,7 @@
 import { User } from '../models/user.model.js';
 import bcryptjs from 'bcryptjs';
 import { genarateTokensetcookie } from '../utils/genarateTokensetcookie.js';
+import { sendverificationEmail } from '../mailtrap/emails.js';
 
 
 export const SignUp = async (req, res) => {
@@ -35,6 +36,7 @@ export const SignUp = async (req, res) => {
 
   
   genarateTokensetcookie(req, res, user._id);
+  sendverificationEmail(user.email,verificationtoken);
 
   
   res.status(201).json({ 

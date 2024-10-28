@@ -2,7 +2,7 @@
 import bcryptjs from "bcryptjs";
 import crypto from 'crypto'
 import { genarateTokensetcookie } from "../utils/genarateTokensetcookie.js";
-import { sendWelcomeEmail, sendresetPasswordEmail, sendverificationEmail } from "../mailtrap/emails.js";
+import { sendSuccessResetpassword, sendWelcomeEmail, sendresetPasswordEmail, sendverificationEmail } from "../mailtrap/emails.js";
 import { User } from "../models/user.model.js";
 
 
@@ -134,6 +134,42 @@ export const ResetPassword = async(req,res)=>{
     
   }
 }
+
+export const PasswordReset = async(req,res)=>{
+
+  try {
+    const {token} = req.params;
+    const {password} = req.body;
+
+    const user = await User.findOne({
+      
+     resetPaswordtoke : token,
+     resetPasswordtokenexpire: { $gt: Date.now() }
+
+    })
+    if(!user){
+      return res.status(201).json({success:false,message:"Reset password token is expire"});
+    }
+
+    const hashPassword = await bcryptjs.hash(password, 10);
+    user.password = hashPassword;
+    user.resetPaswordtoke = undefined;
+    user.resetPasswordtokenexpire = undefined;
+    await user.save();
+    await sendSuccessResetpassword(user.email);
+    return res.status(200).json({success:true,message:"Password reset succeffly!"});
+    
+  } catch (error) {
+    console.log(error);
+    return res.status(40).json({success:false,message:"Internal server error"});
+    
+  }
+    
+
+
+}
+
+
 
 export const Logout = (req, res) => {
   res.clearCookie("token");

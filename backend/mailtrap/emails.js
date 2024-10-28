@@ -1,4 +1,4 @@
-import { PASSWORD_RESET_REQUEST_TEMPLATE, VERIFICATION_EMAIL_TEMPLATE } from "./emilTemplate.js";
+import { PASSWORD_RESET_REQUEST_TEMPLATE, PASSWORD_RESET_SUCCESS_TEMPLATE, VERIFICATION_EMAIL_TEMPLATE } from "./emilTemplate.js";
 import { mailtrapClient, sender } from "./mailtrap.config.js";
 
 export const sendverificationEmail = async (email, verificationtoken) => {
@@ -27,7 +27,7 @@ export const sendWelcomeEmail = async(email,name)=>{
     const recipient = [{email}];
 
     try {
-        const htmlContent = (verificationtoken);
+        // const htmlContent = (verificationtoken);
 
         const response = await mailtrapClient.send({
             from: sender,
@@ -35,7 +35,7 @@ export const sendWelcomeEmail = async(email,name)=>{
             template_uuid: "441cb485-4463-46b9-9704-e7b6c0bc5068",
             template_variables: {
               "company_info_name": "Tech Stack",
-              "name":"name"
+              "name":name
               
             }
           })
@@ -64,6 +64,27 @@ export const sendresetPasswordEmail= async(email,resetURL)=>{
           })
 
           console.log("Welcome Email Send succefully")
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+export const sendSuccessResetpassword= async(email)=>{
+    const recipient = [{email}];
+
+    try {
+        const htmlContent = PASSWORD_RESET_SUCCESS_TEMPLATE;
+
+        const response = await mailtrapClient.send({
+            from: sender,
+            to: recipient,
+            subject: "Password Reset Succefully",
+            html: htmlContent, 
+            category: "Reset password"
+            
+          })
+
+          console.log("Password reset succuflly")
         
     } catch (error) {
         console.log(error)

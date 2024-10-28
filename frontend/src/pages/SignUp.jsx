@@ -68,7 +68,7 @@ function SignUp() {
       <div>
         <p className="text-gray-600 text-center my-2">
           If You have an account ?{" "}
-          <Link to="login" className="text-[#FFC300]">
+          <Link to="/login" className="text-[#FFC300]">
             Login
           </Link>
         </p>

@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
+import EmailVerificationPage from "./pages/EmailVerificationPage";
 
 function App() {
  
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<SignUp/>}></Route>
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/register" element={<SignUp/>}></Route>
+        <Route path="/email-verify" element={<EmailVerificationPage/>}></Route>
       </Routes>
     </div>
   )

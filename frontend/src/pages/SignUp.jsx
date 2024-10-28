@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Inputfeild from "../Components/Inputfeild";
-import { Lock, Mail, User } from "lucide-react";
+import { Loader, Lock, Mail, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import PasswordStrengthMeter from "../Components/PasswordStrengthMeter";
 
@@ -9,6 +9,7 @@ function SignUp() {
     const [name,setName] = useState("");
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
+    const isLoading = true;
 
     const handlesignUp = (e)=>{
         e.preventDefault();
@@ -59,8 +60,10 @@ function SignUp() {
 
         <PasswordStrengthMeter password={password}/>
         <div className="flex items-center justify-center text-white my-4 ">
-          <button type="submit" className="bg-[#FFC300] px-1 py-2 w-1/2 font-bold shadow-md rounded-lg">
-            SignUp
+          <button type="submit"
+          disabled={isLoading}
+          className="bg-[#FFC300] px-1 py-2 w-1/2 font-bold shadow-md rounded-lg cursor-pointer hover:scale-105">
+          {isLoading ? <Loader className="animate-spin text-center mx-auto"></Loader> : "Sign Up"} 
           </button>
         </div>
       </form>

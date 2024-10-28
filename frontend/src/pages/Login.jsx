@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Inputfeild from "../Components/Inputfeild";
-import { Lock, Mail, User } from "lucide-react";
+import { Loader, Lock, Mail, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
 function Login() {
 
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
+    const isLoding = false;
 
     const handlelogin = (e)=>{
         e.preventDefault();
@@ -49,8 +50,11 @@ function Login() {
 
        
         <div className="flex items-center justify-center text-white my-4 ">
-          <button type="submit" className="bg-[#FFC300] px-1 py-2 w-1/2 font-bold shadow-md rounded-lg">
-            Login
+          <button 
+          
+          disabled={isLoding}
+          type="submit" className="bg-[#FFC300] px-1 py-2 w-1/2 font-bold shadow-md rounded-lg cursor-pointer hover:scale-105">
+          {isLoding ? <Loader className="animate-spin text-center mx-auto"></Loader> : "Login"}
           </button>
         </div>
       </form>

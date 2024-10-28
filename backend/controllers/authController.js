@@ -1,8 +1,10 @@
-import { User } from "../models/user.model.js";
+
 import bcryptjs from "bcryptjs";
+import crypto from 'crypto'
 import { genarateTokensetcookie } from "../utils/genarateTokensetcookie.js";
-import { sendWelcomeEmail, sendverificationEmail } from "../mailtrap/emails.js";
-import MessagesApi from "mailtrap/dist/lib/api/resources/Messages.js";
+import { sendWelcomeEmail, sendresetPasswordEmail, sendverificationEmail } from "../mailtrap/emails.js";
+import { User } from "../models/user.model.js";
+
 
 export const SignUp = async (req, res) => {
   const { email, name, password } = req.body;
@@ -107,6 +109,31 @@ export const Login = async (req, res) => {
   }
   
 };
+
+export const ResetPassword = async(req,res)=>{
+  try {
+    const {email} = req.body;
+    const user = await User.findOne({email});
+    if(!user){
+      return res.status(201).json({success:false,message:"Invalid Credential"});
+    }
+  const resetPaswordtoke = crypto.randomBytes(20).toString('hex');
+  const resetPasswordtokenexpire = Date.now() + 1* 60 * 60 * 1000;
+
+  user.resetPaswordtoke= resetPaswordtoke;
+  user.resetPasswordtokenexpire = resetPasswordtokenexpire;
+
+  await user.save();
+  await sendresetPasswordEmail(user.email,`${process.env.CLIENT_URL}/reset-password/${resetPaswordtoke}`);
+  console.log("password reset link share succefully");
+  return res.status(200).json({success:true,message:"Reset password link share"});
+
+    
+  } catch (error) {
+    return res(401).json({success:false,message:"Internal server error"});
+    
+  }
+}
 
 export const Logout = (req, res) => {
   res.clearCookie("token");

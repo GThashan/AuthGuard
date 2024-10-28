@@ -1,4 +1,4 @@
-import { VERIFICATION_EMAIL_TEMPLATE } from "./emilTemplate.js";
+import { PASSWORD_RESET_REQUEST_TEMPLATE, VERIFICATION_EMAIL_TEMPLATE } from "./emilTemplate.js";
 import { mailtrapClient, sender } from "./mailtrap.config.js";
 
 export const sendverificationEmail = async (email, verificationtoken) => {
@@ -27,6 +27,7 @@ export const sendWelcomeEmail = async(email,name)=>{
     const recipient = [{email}];
 
     try {
+        const htmlContent = (verificationtoken);
 
         const response = await mailtrapClient.send({
             from: sender,
@@ -45,3 +46,27 @@ export const sendWelcomeEmail = async(email,name)=>{
         console.log(error)
     }
 }
+
+
+export const sendresetPasswordEmail= async(email,resetURL)=>{
+    const recipient = [{email}];
+
+    try {
+        const htmlContent = PASSWORD_RESET_REQUEST_TEMPLATE(resetURL);
+
+        const response = await mailtrapClient.send({
+            from: sender,
+            to: recipient,
+            subject: "Reset Password",
+            html: htmlContent, 
+            category: "password Reset"
+            
+          })
+
+          console.log("Welcome Email Send succefully")
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+

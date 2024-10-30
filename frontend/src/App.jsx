@@ -7,7 +7,7 @@ function App() {
  
 
   return (
-    <div className="bg-yellow-50 h-[100vh] flex items-center justify-center">
+    <div className="bg-yellow-50 h-[120vh] flex items-center justify-center">
       <Routes>
         <Route path="/" element={<SignUp/>}></Route>
         <Route path="/login" element={<Login/>}></Route>

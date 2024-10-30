@@ -27,12 +27,12 @@ export const sendWelcomeEmail = async(email,name)=>{
     const recipient = [{email}];
 
     try {
-        // const htmlContent = (verificationtoken);
+       
 
         const response = await mailtrapClient.send({
             from: sender,
             to: recipient,
-            template_uuid: "441cb485-4463-46b9-9704-e7b6c0bc5068",
+            template_uuid: "a0db4aed-d61a-43b0-bd47-3d6af8ec40f4",
             template_variables: {
               "company_info_name": "Tech Stack",
               "name":name

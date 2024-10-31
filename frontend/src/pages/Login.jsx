@@ -9,17 +9,13 @@ function Login() {
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
    const {login,error,isloading} = useauthStore();
-   const Navigate = useNavigate();
+  
 
 
     const handlelogin =async (e)=>{
         e.preventDefault();
-        try {
           await login(email,password);
-          return Navigate('/');
-        } catch (error) {
-           console.log(error);
-        }
+        
        
         
     }

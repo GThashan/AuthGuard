@@ -14,7 +14,12 @@ function Login() {
 
     const handlelogin =async (e)=>{
         e.preventDefault();
+        try {
           await login(email,password);
+        } catch (error) {
+          console.log(error)
+        }
+          
         
        
         
@@ -70,7 +75,7 @@ function Login() {
       <div>
         <p className="text-gray-600 text-center my-2">
           Don't have an account ?{" "}
-          <Link to="/register" className="text-[#FFC300]">
+          <Link to="/signUp" className="text-[#FFC300]">
             Register
           </Link>
         </p>

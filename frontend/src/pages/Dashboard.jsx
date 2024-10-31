@@ -1,6 +1,10 @@
 import React from 'react'
+import { useauthStore } from '../store/authStore'
+import { formatDate } from "../utils/date";
 
 function Dashboard() {
+
+  const {user} = useauthStore();
   return (
     <div className='bg-[#110702] max-w-lg p-5 rounded-lg'>
          <h1 className='text-[#FFC300] font-bold text-center text-[20px]'>Dashboard</h1>
@@ -8,8 +12,8 @@ function Dashboard() {
           <h1 className='text-[#FFC300] font-bold'>Profile Infromation</h1>
           <div className='p-4'>
             <ul>
-              <li>Name : Gamage Hashan</li>
-              <li>Email :email@gmail.com</li>
+              <li>Name : {user.name}</li>
+              <li>Email : {user.email}</li>
             </ul>
           </div>
          </div>
@@ -17,10 +21,19 @@ function Dashboard() {
          <div className='text-white bg-[#1f1713] p-4 my-4 border border-white rounded-lg'>
           <h1 className='text-[#FFC300] font-bold'>Acitivity Information</h1>
           <div className='p-4'>
-            <ul>
-              <li>Join date : 2024/06/24</li>
-              <li>Last Login : 1 min ago , 2024/05/02</li>
-            </ul>
+          <p className='text-gray-300'>
+						<span className='font-bold'>Joined: </span>
+						{new Date(user.createdAt).toLocaleDateString("en-US", {
+							year: "numeric",
+							month: "long",
+							day: "numeric",
+						})}
+					</p>
+					<p className='text-gray-300'>
+						<span className='font-bold'>Last Login: </span>
+
+						{formatDate(user.lastLogin)}
+					</p>
           </div>
          </div>
 

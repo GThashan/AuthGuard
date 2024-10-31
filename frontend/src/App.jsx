@@ -1,38 +1,52 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
+
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
-import { Toaster } from "react-hot-toast";
-import { useauthStore } from "./store/authStore";
-import { useEffect } from "react";
 import Dashboard from "./pages/Dashboard";
+import { useauthStore } from "./store/authStore";
+import LoadingSpinner from "./Components/LoadingSpinner";
 
-const protectrouters = ({ children }) => {
-  const { isAuthenticated, user } = useauthStore();
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  if (!user.isverify) {
-    return <Navigate to="/email-verify" replace />;
-  }
-  return children;
+
+
+const ProtectedRoute = ({ children }) => {
+	const { isAuthenticated, user } = useauthStore();
+
+	if (!isAuthenticated) {
+		return <Navigate to='/' replace />;
+	}
+
+	if (!user?.isverify) {
+		return <Navigate to='/email-verify' replace />;
+	}
+
+	return children;
 };
 
-const rederectauthrize = ({ children }) => {
-  const { isAuthenticated, user } = useauthStore();
-  if (isAuthenticated && user.isverify) {
-    return <Navigate to="/email-verify" replace />;
-  }
 
-  return children;
+const RedirectAuthenticatedUser = ({ children }) => {
+	const { isAuthenticated, user } = useauthStore();
+
+	if (isAuthenticated && user?.isverify) {
+		return <Navigate to='/' replace />;
+	}
+
+	return children;
 };
+
+
+
 
 function App() {
-  const { checkAuth, isCheckeckingauth, user } = useauthStore();
+  const { isCheckeckingauth, checkAuth , user } = useauthStore();
 
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+	useEffect(() => {
+		checkAuth();
+	}, [checkAuth]);
+
+	if (isCheckeckingauth) return <LoadingSpinner />;
 
   console.log("Is authenticted", isCheckeckingauth);
   console.log("user", user);
@@ -40,28 +54,28 @@ function App() {
   return (
     <div className="bg-yellow-50 h-[120vh] flex items-center justify-center">
       <Routes>
-        <Route
-          path="/"
-          element={
-            <protectrouters>
-              <Dashboard />
-            </protectrouters>
-          }
-        ></Route>
+      <Route
+					path='/'
+					element={
+						<ProtectedRoute>
+							<Dashboard />
+						</ProtectedRoute>
+					}
+				/>
         <Route
           path="/signUp"
           element={
-            <rederectauthrize>
+            <RedirectAuthenticatedUser>
               <SignUp />
-            </rederectauthrize>
+            </RedirectAuthenticatedUser>
           }
-        ></Route>
+        />
         <Route
           path="/login"
           element={
-            <rederectauthrize>
+            <RedirectAuthenticatedUser>
               <Login />
-            </rederectauthrize>
+            </RedirectAuthenticatedUser>
           }
         ></Route>
 

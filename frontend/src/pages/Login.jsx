@@ -1,16 +1,27 @@
 import React, { useState } from "react";
 import Inputfeild from "../Components/Inputfeild";
 import { Loader, Lock, Mail, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useauthStore } from "../store/authStore";
 
 function Login() {
-
+    
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
-    const isLoding = false;
+   const {login,error,isloading} = useauthStore();
+   const Navigate = useNavigate();
 
-    const handlelogin = (e)=>{
+
+    const handlelogin =async (e)=>{
         e.preventDefault();
+        try {
+          await login(email,password);
+          return Navigate('/');
+        } catch (error) {
+           console.log(error);
+        }
+       
+        
     }
   return (
     
@@ -20,7 +31,7 @@ function Login() {
       </h1>
 
       <form onSubmit={handlelogin}>
-       
+      {error ? <div className="bg-red-400 text-white text-center font-bold p-2">{error}</div>  : ""}
         <div className="relative mb-6">
           <label className="absolute -top-3 left-3 px-1  text-[#FFC300] text-md">
             Email
@@ -52,9 +63,10 @@ function Login() {
         <div className="flex items-center justify-center text-white my-4 ">
           <button 
           
-          disabled={isLoding}
+          disabled={isloading}
           type="submit" className="bg-[#FFC300] px-1 py-2 w-1/2 font-bold shadow-md rounded-lg cursor-pointer hover:scale-105">
-          {isLoding ? <Loader className="animate-spin text-center mx-auto"></Loader> : "Login"}
+          
+          {isloading ? <Loader className="animate-spin text-center mx-auto"></Loader> : "Login"} 
           </button>
         </div>
       </form>

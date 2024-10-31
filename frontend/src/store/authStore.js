@@ -38,6 +38,17 @@ export const useauthStore = create((set)=>({
         } catch (error) {
             set({ isAuthenticated: false, isCheckeckingauth:false });
         }
-    }
+    },
+
+    login: async(email,password)=>{
+        set({isloading:true,error:null})
+        try {
+            const response = await axios.post(`http://localhost:3000/api/auth/login`,{email,password});
+            set({user: response.data.user , isAuthenticated:true, isloading:false})
+        } catch (error) {
+            set({error: error.response.data.message || "login failure" ,  isloading:false})
+            throw error
+        }
+    },
 
 }))

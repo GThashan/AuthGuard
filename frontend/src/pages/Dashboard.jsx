@@ -4,7 +4,11 @@ import { formatDate } from "../utils/date";
 
 function Dashboard() {
 
-  const {user} = useauthStore();
+  const {user,logout} = useauthStore();
+
+  const handlelogout = async()=>{
+    await logout();
+  }
   return (
     <div className='bg-[#110702] max-w-lg p-5 rounded-lg'>
          <h1 className='text-[#FFC300] font-bold text-center text-[20px]'>Dashboard</h1>
@@ -38,7 +42,7 @@ function Dashboard() {
          </div>
 
          <div>
-          <button className='bg-red-600 text-white px-2 py-2'>LogOut</button>
+          <button className='bg-red-600 text-white px-2 py-2' onClick={handlelogout}>LogOut</button>
          </div>
     </div>
   )

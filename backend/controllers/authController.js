@@ -38,8 +38,9 @@ export const SignUp = async (req, res) => {
 
   await user.save();
 
-  genarateTokensetcookie(req, res, user._id);
-  sendverificationEmail(user.email, verificationtoken);
+  genarateTokensetcookie(res, user._id);
+  await sendverificationEmail(user.email, verificationtoken);
+
 
   res.status(201).json({
     user: {
@@ -177,16 +178,18 @@ export const Logout = (req, res) => {
 };
 
 
-export const checkauth = async(req,res)=>{
-try {
-  const user = await User.findById(req.userId).select("-password");
-  if (!user) {
-    return res.status(400).json({ success: false, message: "User not found" });
-  }
 
-  res.status(200).json({ success: true, user });
-} catch (error) {
-  console.log("Error in checkAuth ", error);
-  res.status(400).json({ success: false, message: error.message });
-}
-}
+
+export const checkauth = async (req, res) => {
+	try {
+		const user = await User.findById(req.userId).select("-password");
+		if (!user) {
+			return res.status(400).json({ success: false, message: "User not found" });
+		}
+
+		res.status(200).json({ success: true, user });
+	} catch (error) {
+		console.log("Error in checkAuth ", error);
+		res.status(400).json({ success: false, message: error.message });
+	}
+};

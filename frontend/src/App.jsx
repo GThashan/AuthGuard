@@ -5,8 +5,8 @@ import SignUpPage from "./pages/SignUp";
 import LoginPage from "./pages/Login";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
 import DashboardPage from "./pages/Dashboard";
-// import ForgotPasswordPage from "./pages/ForgotPasswordPage";
-// import ResetPasswordPage from "./pages/ResetPasswordPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 import LoadingSpinner from "./Components/LoadingSpinner";
 
@@ -83,23 +83,23 @@ function App() {
 					}
 				/>
 				<Route path='/verify-email' element={<EmailVerificationPage />} />
-				{/* <Route
+				<Route
 					path='/forgot-password'
 					element={
 						<RedirectAuthenticatedUser>
 							<ForgotPasswordPage />
 						</RedirectAuthenticatedUser>
 					}
-				/> */}
+				/> 
 
-				{/* <Route
+				 <Route
 					path='/reset-password/:token'
 					element={
 						<RedirectAuthenticatedUser>
 							<ResetPasswordPage />
 						</RedirectAuthenticatedUser>
-					}
-				/> */}
+					} 
+				/>
 				
 				<Route path='*' element={<Navigate to='/' replace />} />
 			</Routes>

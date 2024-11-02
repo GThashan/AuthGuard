@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 
 
 app.use(cors({
-	origin:["https://auth-guard-frontend.vercel.app/"],
+	origin:["https://auth-guard-frontend.vercel.app"],
 	methods:["POST","GET"],
 	credentials:true
 }));

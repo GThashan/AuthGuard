@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.get("/",(req,res)=>{
 	res.json("Hello");
 })
-app.use("/", authRoute);
+app.use("/api/auth", authRoute);
 
 
 app.listen(PORT, () => {

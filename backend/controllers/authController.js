@@ -126,8 +126,8 @@ export const PasswordReset = async (req, res) => {
     const { password } = req.body;
 
     const user = await User.findOne({
-      resetPasswordToken: token,
-      resetPasswordTokenExpire: { $gt: Date.now() },
+      resetPaswordtoke: token,
+      resetPasswordtokenexpire: { $gt: Date.now() },
     });
 
     if (!user) {
@@ -135,8 +135,8 @@ export const PasswordReset = async (req, res) => {
     }
 
     user.password = await bcryptjs.hash(password, 10);
-    user.resetPasswordToken = undefined;
-    user.resetPasswordTokenExpire = undefined;
+    user.resetPaswordtoke = undefined;
+    user.resetPasswordtokenexpire = undefined;
 
     await user.save();
     await sendSuccessResetpassword(user.email);

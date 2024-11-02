@@ -18,6 +18,12 @@ app.use(cors({
 	methods:["POST","GET"],
 	credentials:true
 }));
+app.options("*", cors({
+    origin: "https://auth-guard-sigma.vercel.app",
+    methods: ["POST", "GET", "OPTIONS"],
+    credentials: true
+}));
+
 
 app.use(express.json()); 
 app.use(cookieParser()); 

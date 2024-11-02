@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 
 
 app.use(cors({
-	origin:["https://deploye.vercel.app"],
+	origin:[""],
 	methods:["POST","GET"],
 	credentials:true
 }));

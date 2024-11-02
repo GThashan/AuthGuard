@@ -20,10 +20,9 @@ const UserSchema = new mongoose.Schema({
         type:Date,
         default:Date.now
     },
-    isverify:{
-        type:Boolean,
-        default:false
-
+    isVerified: {
+        type: Boolean,
+        default: false,
     },
 
     resetPaswordtoke : String,

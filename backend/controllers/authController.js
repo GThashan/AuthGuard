@@ -4,7 +4,6 @@ import { genarateTokensetcookie } from "../utils/genarateTokensetcookie.js";
 import { sendSuccessResetpassword, sendWelcomeEmail, sendresetPasswordEmail, sendverificationEmail } from "../mailtrap/emails.js";
 import { User } from "../models/user.model.js";
 
-
 export const SignUp = async (req, res) => {
   const { email, name, password } = req.body;
 
@@ -12,7 +11,7 @@ export const SignUp = async (req, res) => {
     return res.status(400).json({ success: false, message: "All fields are required" });
   }
 
-  const existingUser = await User.findOne({ email });
+  const existingUser = await User.findOne({ email }).lean();
   if (existingUser) {
     return res.status(409).json({ success: false, message: "User already exists" });
   }
@@ -29,9 +28,13 @@ export const SignUp = async (req, res) => {
       verificationtokenExpireAt: Date.now() + 24 * 60 * 60 * 1000,
     });
 
-    await user.save();
+    // Save user and send email concurrently
+    await Promise.all([
+      user.save(),
+      sendverificationEmail(user.email, verificationToken)
+    ]);
+
     genarateTokensetcookie(res, user._id);
-    await sendverificationEmail(user.email, verificationToken);
 
     res.status(201).json({
       user: {
@@ -45,6 +48,7 @@ export const SignUp = async (req, res) => {
     res.status(500).json({ success: false, message: "Registration failed", error });
   }
 };
+
 
 
 export const Emailverification = async (req, res) => {

@@ -50,7 +50,7 @@ function App() {
 
 	return (
 		<div
-			className=' bg-[#fee79a] min-h-screen flex items-center justify-center relative overflow-hidden'
+			className='bg-[url("https://elements-resized.envatousercontent.com/elements-video-cover-images/files/bbde24ab-5a83-4ba9-a022-4368b4f52bd8/inline_image_preview.jpg?w=500&cf_fit=cover&q=85&format=auto&s=c8a5000879a479c381c1e9aa72451003442bfb233cd9101659db1bd17040691c")] min-h-screen flex items-center justify-center relative overflow-hidden'
 		>
 			
 

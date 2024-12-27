@@ -20,7 +20,7 @@ const ForgotPasswordPage = () => {
 	return (
 		<div
 			
-			className='max-w-md w-full bg-[#110702]  rounded-2xl shadow-xl overflow-hidden'
+			className='max-w-md w-full bg-[#3A3A3B]  rounded-2xl shadow-xl overflow-hidden'
 		>
 			<div className='p-8'>
 				<h2 className='text-3xl font-bold mb-6 text-center text-[#FFC300]'>
@@ -64,7 +64,7 @@ const ForgotPasswordPage = () => {
 				)}
 			</div>
 
-			<div className='px-8 py-4 bg-[#110702] flex justify-center'>
+			<div className='px-8 py-4 bg-[#3A3A3B] flex justify-center'>
 				<Link to={"/login"} className='text-sm text-[#FFC300] hover:underline flex items-center'>
 					<ArrowLeft className='h-4 w-4 mr-2' /> Back to Login
 				</Link>

@@ -26,7 +26,7 @@ function Login() {
     }
   return (
     
-      <div className="bg-[#110702] max-w-xl w-full p-6 rounded-lg shadow-lg">
+      <div className="bg-[#3A3A3B] max-w-xl w-full p-6 rounded-lg shadow-lg">
       <h1 className="text-white text-center text-[23px] mb-4 font-bold">
         Welcome Back
       </h1>
